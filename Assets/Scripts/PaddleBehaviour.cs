@@ -35,15 +35,6 @@ public class PaddleBehaviour : NetworkBehaviour {
                 transform.position = new Vector2(x, 0f);
             }
         }
-
-        ApplyTeamColor();
-    }
-
-    private void ApplyTeamColor() {
-        if (spriteRenderer == null) return;
-
-        bool isTeam1 = (OwnerClientId % 2 == 0);
-        spriteRenderer.color = isTeam1 ? new Color(0.2f, 0.6f, 1f) : new Color(1f, 0.3f, 0.3f);
     }
 
     void Update() {
