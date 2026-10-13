@@ -6,9 +6,13 @@ using System;
 public class GameManager : NetworkBehaviour {
     public static GameManager Instance { get; private set; }
 
+    public int maxScore = 7;
+
     public NetworkVariable<int> scorePlayer1 = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public NetworkVariable<int> scorePlayer2 = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    public NetworkVariable<int> winningTeam = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     public event Action<int, int> OnScoreChanged;
 
@@ -45,8 +49,24 @@ public class GameManager : NetworkBehaviour {
 
     public void AddScore(int playerID) {
         if (!IsServer) return;
+        
+        if (winningTeam.Value != 0) return;
 
         if (playerID == 0) scorePlayer1.Value++;
         else if (playerID == 1) scorePlayer2.Value++;
+
+        CheckWinCondition();
+    }
+
+    private void CheckWinCondition() {
+        if (scorePlayer1.Value >= maxScore) {
+            winningTeam.Value = 0;
+        } else if (scorePlayer2.Value >= maxScore) {
+            winningTeam.Value = 1;
+        }
+    }
+
+    public void GoToScene(string scene) {
+        SceneManager.LoadScene(scene);
     }
 }

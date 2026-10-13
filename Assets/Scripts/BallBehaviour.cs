@@ -44,14 +44,13 @@ public class BallBehaviour : NetworkBehaviour {
     public void Launch() {
         if (!IsServer) return;
 
-        if (!isGameStarted) {
+        if (!isGameStarted || GameManager.Instance.winningTeam.Value != 0) {
             rb.linearVelocity = Vector2.zero;
             transform.position = Vector2.zero;
             return;
         }
 
         transform.position = Vector2.zero;
-
         float x = Random.Range(0, 2) == 0 ? -1f : 1f;
         float y = Random.Range(-0.5f, 0.5f);
 
