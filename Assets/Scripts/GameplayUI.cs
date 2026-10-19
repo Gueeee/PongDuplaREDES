@@ -49,9 +49,9 @@ public class GameplayUI : MonoBehaviour {
 
         if (winText != null) {
             if (winningTeam == 1) {
-                winText.text = "TIME 1 VENCEU!";
+                winText.text = "O TIME 1 GANHOU";
             } else if (winningTeam == 2) {
-                winText.text = "TIME 2 VENCEU!";
+                winText.text = "O TIME 2 GANHOU";
             }
         }
     }
